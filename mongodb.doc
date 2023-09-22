@@ -1,0 +1,8 @@
+#1 so once you start ur database by clicking ur bat file, the first word/letter/name you type will be ur data base name then you click enter e.g martel or pepsi can be ur database name
+
+#2. so to creat a collection in this like database like staffs, distributors or shareholders , you type pepsi.staffs.insertOne({fullName: "Godswill clever"})
+
+#3 to creat more than one stuff or attribute of staff, you will have to put it inside an array e.g pepsi.staff.insertMany([{fullName:charles green, age:20,isMarried:false},{fullName:King wood, age:34, isMarried:true}])
+
+#3a to find or see whis is in this array of database you type.. pepsi.staff.find()
+52656227

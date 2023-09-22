@@ -1,0 +1,20 @@
+#learn javascript promise
+
+#request in  and types of reqiest
+#postman = postman is an api platform for building and using api
+#thunder client is another api testing tool that is used directly inside ur vscode
+#api testing using nodejs
+#status codes
+#fs(file system)- can be used to work in a file if you have a database
+#when using a big data it is best and adviced to use Nosql database over sql database 
+#chectout/ study types of database and the different database and the different sql and NOSQL database
+
+
+# to get my mongodb running , we installed mongodb and i created a .bat file which i used in starting the data base when clicked and we downloaded mongosh zipped file and unziped it then copied the mongosh file into our mongodb localfile/bin directory
+
+https://www.youtube.com/shorts/1dNLZv2EUxI
+
+GET /get?hash=%3CREQUIRED%3E&returnType=image HTTP/1.1
+X-Rapidapi-Key: 717a8e3a22msh5a709d1321fea51p1b76d5jsn502c3cbaa871
+X-Rapidapi-Host: arimagesynthesizer.p.rapidapi.com
+Host: arimagesynthesizer.p.rapidapi.com

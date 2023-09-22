@@ -1,0 +1,17 @@
+types of relationship in mongodb
+1. One to many relationships
+2. many to many relationships
+3. many to one relationships
+
+
+mongoose is an object data modeling (ODM) library for mongoDB and Node.js
+..it manages relationship betweet data, provides schema validation, and is used to translate between objects in code and the representation of those objects in mongoDb
+
+//recap
+schema using mongoose
+connecting ur mongoose to ur mongodb database
+recieving file and data from the front end and stored to the data
+
+
+ci/cd in git - continues integration and continues deployment
+denkins for ci/cd
