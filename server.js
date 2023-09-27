@@ -2,6 +2,8 @@ const express = require('express')
 const path = require('path')
 
 const session = require('express-session')
+// const mongoDBSession = require ("connect-mongodb-session")(session)
+const mongoDBSession = require ("connect-mongodb-session")(session)
 const flash = require ('connect-flash')
 
 const connectDB = require('./utils/connectDB')
@@ -16,11 +18,20 @@ app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, '/views'))
 app.use(express.static(path.join(__dirname, '/Public')))
 
+
+//creating mongodb session
+const store = new mongoDBSession({
+    uri:'mongodb+srv://CLever:8HI89zS22z432hLt@cluster0.fkilvng.mongodb.net/test',
+    collection:"mySession"
+
+})
+
 //setup flash with session
 app.use(session({
     secret:'keyboard cat',
-    saveUninitialized:true,
-    resave:true
+    saveUninitialized:false,
+    resave:false,
+    store:store
 
     })) 
 app.use(flash());
@@ -28,13 +39,28 @@ app.use(flash());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-
+connectDB()
 const port = 3000;
 
+const Authentication = (req,res,next) =>{
 
-connectDB()
+    if (req.session.Authentication){
+        next()
+    }else{
+        res.redirect("/login")
+    }
 
+};
+
+// const isAuth = (req,res,next)=>{
+//     if(req.session.isAuth){
+//         next();
+//     }else{
+//         res.redirect("/login")
+//     }
+// };
 app.get('/', (req,res)=>{
+    console.log(req.sessionID)
     res.render('registration', {messages:req.flash('info')})
 })
 
@@ -48,7 +74,7 @@ app.get('/login', (req,res)=>{
 app.get("/forgetpassword",async (req,res)=>{
     res.render("forgetpassword",{messages:req.flash('info')})
 })
-app.get('/dashboard', (req,res)=>{
+app.get('/dashboard', Authentication, (req,res)=>{
     // console.log(foundUser)
     res.render('dashboard',{foundUser})
 })
@@ -133,6 +159,8 @@ if(foundUser){
     const user = await bcrypt.compare(password, foundUser.password)
 
     if(user){
+        // req.session.isAuth = true;
+        req.session.Authentication = true;
         res.redirect('/dashboard')
     }else{
         req.flash('info','username or password is Incorrect')
@@ -169,12 +197,28 @@ app.post('/forgetpassword',async (req,res)=>{
 })
 
 //deleting user by the admin
-app.get("/:id", async (req,res)=>{
+app.get("/delete/:id", async (req,res)=>{
     const {id}= req.params
     console.log(id)
     await User.findByIdAndDelete({_id:id})
     res.redirect("/admindashboard")
 })
+
+
+app.post("/logout", (req,res)=>{
+    req.session.destroy((err)=>{
+        if(err) throw err;
+        res.redirect("/login")
+    })
+})
+
+// app.post("/logout", (req,res) =>{
+//     req.session.destroy((err)=>{
+//         if (err) throw err;
+//         res.redirect('/')
+//     })
+// })
+
 
 
 app.listen(port,()=>{
